@@ -109,8 +109,10 @@ c--- loop over all PDF sets
      &' TITLE BOTTOM ','"',A50,'"',/1X,
      &' TITLE LEFT ','"',A50,'"',/1X,
      &' SET SCALE Y ',A5,/1X,
-     &' (SET TICKS TOP OFF)   '/1x,     
-     &' SET LIMITS X ',F10.5,' ',F10.5,/1X,
+     &' (SET TICKS TOP OFF)   '/1x,
+c--- Modification made here to have a coherent output in extreme cases
+     &' SET LIMITS X ',F10.3,' ',F10.3,/1X,
+c--- End Modification
      &' SET ORDER X Y DY ')
       DO 1 J=1,NBIN(N)
       IF(EHIST(NMATCH,K,J).EQ.0.) GO TO 1
@@ -156,8 +158,10 @@ c--- this bit writes out the normal plot
      &' TITLE BOTTOM ','"',A50,'"',/1X,
      &' TITLE LEFT ','"',A50,'"',/1X,
      &' SET SCALE Y ',A5,/1X,
-     &' (SET TICKS TOP OFF)   '/1x,     
-     &' SET LIMITS X ',F10.5,' ',F10.5,/1X,
+     &' (SET TICKS TOP OFF)   '/1x,
+c--- Modification made here to have a coherent output in extreme cases
+     &' SET LIMITS X ',F10.3,' ',F10.3,/1X,
+c--- End Modification
      &' SET ORDER X Y DY ')
       WRITE(99,200)
       write(99,*) 'SET COLOR RED'

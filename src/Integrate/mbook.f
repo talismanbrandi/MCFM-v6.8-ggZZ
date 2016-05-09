@@ -116,9 +116,11 @@ c     & ' NO','NO',' NO','NO',' NO','NO',' NO','NO',' NO','NO'/
       HMIN(N)=XMIN
       HMAX(N)=XMAX+1d-8
       NNBIN=INT((XMAX+1d-8-XMIN)/DEL)
-      IF (NNBIN .GT. 100) THEN
+c--- Modification made here to accommodate larger number of bins
+      IF (NNBIN .GT. 200) THEN
       WRITE(6,*) XMAX,XMIN,DEL,NNBIN,' BIN SIZE TOO LARGE'
-      DEL=(XMAX-XMIN)/99.d0
+      DEL=(XMAX-XMIN)/199.d0
+c--- End Modification
       NNBIN=INT((XMAX-XMIN)/DEL)
       ENDIF
       NBIN(N)=NNBIN
@@ -351,8 +353,10 @@ c     &' TITLE TOP ','"',A50,'"',/1X,
 c     &' TITLE BOTTOM ','"',A50,'"',/1X,
 c     &' TITLE LEFT ','"',A50,'"',/1X,
 c     &' SET SCALE Y ',A5,/1X,
-c     &' (SET TICKS TOP OFF)   '/1x,     
-c     &' SET LIMITS X ',F10.5,' ',F10.5,/1X,
+c     &' (SET TICKS TOP OFF)   '/1x,
+c--- Modification made here to have a coherent output in extreme cases
+c     &' SET LIMITS X ',F10.3,' ',F10.3,/1X,
+c--- End Modification
 c     &' SET ORDER X Y DY ')
   100 FORMAT( /1x,                               
      &' SET WINDOW Y 2.5 TO 7.'/,1X,
@@ -362,8 +366,10 @@ c     &' SET ORDER X Y DY ')
      &' TITLE BOTTOM ','"',A50,'"',/1X,
      &' TITLE LEFT ','"',A50,'"',/1X,
      &' SET SCALE Y ',A5,/1X,
-     &' (SET TICKS TOP OFF)   '/1x,     
-     &' SET LIMITS X ',F10.5,' ',F10.5,/1X,
+     &' (SET TICKS TOP OFF)   '/1x,
+c--- Modification made here to have a coherent output in extreme cases
+     &' SET LIMITS X ',F10.3,' ',F10.3,/1X,
+c--- End Modification
      &' SET ORDER X Y DY')
   101 FORMAT( /1x,                               
      &' SET WINDOW Y 2.5 TO 7.'/,1X,
@@ -374,8 +380,10 @@ c     &' SET ORDER X Y DY ')
      &' TITLE LEFT ','"dS/d',A,' [fb]"',/1X,
      &' CASE       ','" G"',/1X,
      &' SET SCALE Y ',A5,/1X,
-     &' (SET TICKS TOP OFF)   '/1x,     
-     &' SET LIMITS X ',F10.5,' ',F10.5,/1X,
+     &' (SET TICKS TOP OFF)   '/1x,
+c--- Modification made here to have a coherent output in extreme cases
+     &' SET LIMITS X ',F10.3,' ',F10.3,/1X,
+c--- End Modification
      &' SET ORDER X Y DY')
       DO 1 J=1,NBIN(N)
 c      IF(HIST(N,J).EQ.0.) GO TO 1
@@ -447,7 +455,9 @@ c--- added these variables to scale plots at intermediate steps
      &' set xlabel ','"',A,'" font "Helvetica, 20"',/1X,
      &' set ylabel ','"d{/Symbol s}/d',A,
      &' [fb]" font "Helvetica, 20"',/1X,
-     &' set xrange [ ',F10.5,':',F10.5,']')
+c--- Modification made here to have a coherent output in extreme cases
+     &' set xrange [ ',F10.3,':',F10.3,']')
+c--- End Modification
       if(SCALE .eq. 'log') then
          write(97,*) ' set logscale y'
       endif
@@ -501,7 +511,9 @@ c--- added these variables to scale plots at intermediate steps
  131  FORMAT ( /1X,
      & ' mcfmhisto -> cd();', /1X,
      & ' TH1F *hist = new TH1F( "', A, '", "', A, '", ',
-     & I0, ', ', F10.5, ', ', F10.5, ');')
+c--- Modification made here to have a coherent output in extreme cases
+     & I0, ', ', F10.3, ', ', F10.3, ');')
+c--- End Modification
 
       WRITE(96, 132) histoid(1:idlength), TITLE(N)(1:istring),
      & histoid(1:idlength), TITLE(N)(1:istring)
