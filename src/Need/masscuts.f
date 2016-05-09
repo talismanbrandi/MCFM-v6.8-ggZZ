@@ -80,7 +80,9 @@ c--- do not accept s56<cutoff either
       endif
 
    98 format(' *      ',f8.2,'  <   ',a12,'  < ',f8.2,'      *')
-   99 format(' *          ',f8.2,'  <   ',a3,'  < ',f8.2,'           *')
+c--- Modification made here to have a coherent output in extreme cases
+   99 format(' *          ',f8.2,'  <   ',a3,'  < ',f9.2,'           *')
+c--- End Modification
 
       return
       end
