@@ -16,16 +16,20 @@
       
       gencuts=.false.
       
-c      if ( (case .eq. 'HZZ_4l')
-c     & .or.(case .eq. 'HZZ_tb')
-c     & .or.(case .eq. 'HZZint')
-c     & .or.(case .eq. 'HZZH+i')
-c     & .or.(case .eq. 'ggZZ4l') 
-c     & .or.(case .eq. 'HZZqgI')) then 
-c        call CMS_hzz(pjet,failed)
-c        if (failed) gencuts=.true.
-c        return
-c      endif
+      if ( (case .eq. 'HZZ_4l')
+     & .or.(case .eq. 'HZZ_tb')
+     & .or.(case .eq. 'HZZint')
+     & .or.(case .eq. 'HZZH+i')
+     & .or.(case .eq. 'ggZZ4l')
+c--- Modifications to include these two processes for the ggZZ bix and the qqZZ to leptons production.
+     & .or.(case .eq. 'ggZZbx')
+     & .or.(case .eq. 'ZZlept')
+c--- End Modification
+     & .or.(case .eq. 'HZZqgI')) then
+        call CMS_hzz(pjet,failed)
+        if (failed) gencuts=.true.
+        return
+      endif
 
 c      if ( (case .eq. 'HWW_4l')
 c     & .or.(case .eq. 'HWW_tb')
@@ -50,7 +54,9 @@ c         return
 c      endif
 
 c--- Default: use the cuts from the input file
-      gencuts=gencuts_input(pjet,njets)
+c--- Modified to not use cuts from the input file !!!!
+c      gencuts=gencuts_input(pjet,njets)
+c--- End Modification
         
       return
 
