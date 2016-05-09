@@ -36,8 +36,13 @@ c---
      
       call spinoru(6,p,za,zb)
 
-c--- squared masses and sin(thetaw)     
-      mt2=mt**2
+c--- squared masses and sin(thetaw)
+c--- This is the most important modification.
+c--- The top mass in the loop can be changed here
+c--- We used values of 500, 1000, 2000, 5000 GeV
+      mt2=2000.0**2
+c      mt2=mt**2
+c--- End Modification
       mb2=mb**2
       sinthw=dsqrt(xw)
       
