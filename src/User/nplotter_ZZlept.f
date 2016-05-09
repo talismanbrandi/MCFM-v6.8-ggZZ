@@ -92,6 +92,20 @@ c---       dx:  bin width
 c---   llplot:  equal to "lin"/"log" for linear/log scale
 
 c--- Plots of m(3456) in specific regions
+c--- Modifications for adding a few relevant extended histograms
+      call bookplot(n,tag,'60 < m(3456) < 2010',
+     & m3456,wt,wt2,60d0,2010d0,10d0,'log')
+      n=n+1
+
+      call bookplot(n,tag,'250 < m(3456) < 4000',
+     & m3456,wt,wt2,250d0,4000d0,20d0,'log')
+      n=n+1
+
+      call bookplot(n,tag,'250 < m(3456) < 10000',
+     & m3456,wt,wt2,250d0,10000d0,50d0,'log')
+      n=n+1
+c--- End Modification
+
       call bookplot(n,tag,'10 < m(3456) < 2010',
      & m3456,wt,wt2,10d0,2010d0,20d0,'log')
       n=n+1
