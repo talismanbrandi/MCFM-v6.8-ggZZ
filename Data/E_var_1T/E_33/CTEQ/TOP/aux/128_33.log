@@ -1,0 +1,1712 @@
+ ************** MCFM - version 6.8 ****************
+ *                                                *
+ * MCFM, v6.8                   April 26th, 2014  *
+ *                                                *
+ * Authors: John Campbell, Keith Ellis,           *
+ *          Ciaran Williams                       *
+ *         (johnmc@fnal.gov, ellis@fnal.gov,      *
+ *          ciaran@fnal.gov)                      *
+ *                                                *
+ * For details see:                               *
+ *                                                *
+ *  arXiv:1403.2641 (Triphoton production)        *
+ *  arXiv:1312.1628 (gg->WW, Higgs interference)  *
+ *  arXiv:1311.3589 (gg->ZZ, Higgs interference)  *
+ *  Phys.Rev.D87:114006, arXiv:1302.3856          *
+ *  (tZ, tH -- with R. Rontsch)                   *
+ *  arXiv:1211.6390 (DM, P. Fox and C. Williams)  *
+ *  JHEP 1211:162 (2012), arXiv:1208.0566         *
+ *  (Z+gam+jet,Z+gam+gam -- with H. Hartanto)     *
+ *  arXiv:1204.1513 (top production+decay)        *
+ *  JHEP 1207:052 (2012), arXiv:1204.5678 (ttW)   *
+ *  JHEP 1110:005 (2011), arXiv:1107.5569         *
+ *         (gg->WW,Higgs intference)              *
+ *  JHEP 1107:018 (2011), arXiv:1105.0020         *
+ *         (diboson update)                       *
+ *  JHEP 1103:027 (2011), arXiv:1011.6647         *
+ *         (Wbb for mb>0, with S. Badger)         *
+ *  Phys.Rev.D81:074023, arXiv:1001.4495 (H+2jet) *
+ *                                                *
+ *  P.R.L. 102:142001, arXiv:0903.0005 [hep-ph]   *
+ *    (t-channel single top + explicit b,         *
+ *      JC, R.Frederix, F.Maltoni, F.Tramontano)  *
+ *  N.P.B 726:109(2005), hep-ph/0506289 (W+t)     *
+ *  Phys.Rev.D70:094012, hep-ph/0408158 (Sngl Top)*
+ *       (with Francesco Tramontano)              *
+ *                                                *
+ *  Phys.Rev.D65:113007, hep-ph/0202176 (W,Z+2j)  *
+ *  Phys.Rev.D62:114012, hep-ph/0006304 (W,Z+bb)  *
+ *  Phys.Rev.D60:113006, hep-ph/9905386 (diboson) *
+ *                                                *
+ * On the web:  http://mcfm.fnal.gov/             *
+ **************************************************
+
+ * Using input file named E_var/E_33/CTEQ/TOP/input_128_33.DAT                                    
+
+ * [Flags to specify the mode in which MCFM is run]                                          
+ *                   -1            [nevtrequested] 
+ *                    F            [creatent] 
+ *                    F            [skipnt] 
+ *                    F            [dswhisto] 
+ *                    F            [creategrid] 
+ *                    T            [writetop] 
+ *                    T            [writedat] 
+ *                    T            [writegnu] 
+ *                    T            [writeroot] 
+ *                    F            [writepwg] 
+
+ * [General options to specify the process and execution]                                    
+ *                  128            [nproc] 
+ *                 lord            [part] 
+ * 128_run_33                      [runstring] 
+ *           33000.0000            [sqrts] 
+ *                    1            [ih1] 
+ *                    1            [ih2] 
+ *             126.0000            [hmass] 
+ *               0.5000            [scale] 
+ *               0.5000            [facscale] 
+ * m(3456)                         [dynamicscale] 
+ *                    F            [zerowidth] 
+ *                    F            [removebr] 
+ *                   40            [itmx1] 
+ *               500000            [ncall1] 
+ *                  100            [itmx2] 
+ *               500000            [ncall2] 
+ *                 2020            [ij] 
+ *                    F            [dryrun] 
+ *                    T            [Qflag] 
+ *                    T            [Gflag] 
+
+ * [Heavy quark masses]                                                                      
+ *             173.2000            [top mass] 
+ *               4.7500            [bottom mass] 
+ *               1.5000            [charm mass] 
+
+ * [Pdf selection]                                                                           
+ *              cteq6_l            [pdlabel] 
+ *                    4            [NGROUP] 
+ *                   46            [NSET] 
+ * cteq6mE.LHgrid                  [LHAPDF group] 
+ *                   -1            [LHAPDF set] 
+
+ * [Jet definition and event cuts]                                                           
+ *               0.0000            [m34min] 
+ *           33000.0000            [m34max] 
+ *               0.0000            [m56min] 
+ *           33000.0000            [m56max] 
+ *                    T            [inclusive] 
+ *                 ankt            [algorithm] 
+ *              15.0000            [ptjetmin] 
+ *               0.0000            [etajetmin] 
+ *               5.0000            [etajetmax] 
+ *               0.5000            [Rcut] 
+ *                    T            [makecuts] 
+ *               0.0000            [leptpt] 
+ *              99.0000            [leptrap] 
+ *    0.000,   0.000                [leptveto] 
+ *               0.0000            [misspt] 
+ *               0.0000            [leptpt2] 
+ *              99.0000            [leptrap2] 
+ *    0.000,   0.000                [leptveto2] 
+ *               0.0000            [mtrans34cut] 
+ *               0.0000            [Rjlmin] 
+ *               0.0000            [Rllmin] 
+ *               0.0000            [delyjjmin] 
+ *                    F            [jetsopphem] 
+ *                    0            [lbjscheme] 
+ *               0.0000            [ptbjetmin] 
+ *              99.0000            [etabjetmax] 
+
+ * [Settings for photon processes]                                                           
+ *                    F            [frag] 
+ *             GdRG__LO            [fragset] 
+ *              80.0000            [frag_scale] 
+ *              20.0000            [gammpt] 
+ *               2.5000            [gammrap] 
+ *              20.0000            [gammpt2] 
+ *              20.0000            [gammpt3] 
+ *               0.0000            [Rgalmin] 
+ *               0.4000            [Rgagamin] 
+ *               0.4000            [Rgajetmin] 
+ *               0.4000            [cone_ang] 
+ *               0.5000            [epsilon_h] 
+
+ * [Anomalous couplings of the W and Z]                                                      
+ *               0.0000            [delg1_z] 
+ *               0.0000            [delk_z] 
+ *               0.0000            [delk_g] 
+ *               0.0000            [lambda_z] 
+ *               0.0000            [lambda_g] 
+ *               0.0000            [h1Z] 
+ *               0.0000            [h1gam] 
+ *               0.0000            [h2Z] 
+ *               0.0000            [h2gam] 
+ *               0.0000            [h3Z] 
+ *               0.0000            [h3gam] 
+ *               0.0000            [h4Z] 
+ *               0.0000            [h4gam] 
+ *               2.0000            [tevscale] 
+
+ * [Anomalous width of the Higgs]                                                            
+ *               1.0000            [Gamma_H/Gamma_H(SM)] 
+
+ * [How to resume/save a run]                                                                
+ *                    F            [readin] 
+ *                    F            [writeout] 
+ *                                 [ingridfile] 
+ *                                 [outgridfile] 
+
+ * [Technical parameters that should not normally be changed]
+
+ *                    F            [debug] 
+ *                    T            [verbose] 
+ *                    F            [new_pspace] 
+ *                    F            [virtonly] 
+ *                    F            [realonly] 
+ *                    T            [spira] 
+ *                    F            [noglue] 
+ *                    F            [ggonly] 
+ *                    F            [gqonly] 
+ *                    F            [omitgg] 
+ *                    F            [vanillafiles] 
+ *                    1            [nmin] 
+ *                    2            [nmax] 
+ *                    T            [clustering] 
+ *                    F            [realwt] 
+ *                    0            [colourchoice] 
+ *               0.0100            [rtsmin] 
+ *               0.0001            [cutoff] 
+ *               0.1000            [aii] 
+ *               0.1000            [aif] 
+ *               0.1000            [afi] 
+ *               1.0000            [aff] 
+ *               1.0000            [bfi] 
+ *               1.0000            [bff] 
+
+ Chooser:process chosen by nproc=         128
+
+ *************************** f(p1)+f(p2) --> ******************************************
+ * H(--> Z^0(e^-(p3)+e^+(p4)) + Z^0(mu^-(p5)+mu^+(p6)) [top, bottom loops, exact]     *
+ **************************************************************************************
+
+ ************** Electroweak parameters **************
+ *                                                  *
+ *  zmass(+)   91.1876000     wmass(+)  80.3980000  *
+ * zwidth(+)    2.4952000    wwidth(+)   2.1054000  *
+ *     Gf(+) 0.116639D-04   1/aemmz    132.3384323  *
+ *     xw       0.2226459      mtop(+) 173.2000000  *
+ *   gwsq       0.4264904       esq      0.0949563  *
+ * top width    1.4743080 (LO)                      *
+ *    mb        4.7500000        mc      1.5000000  *
+ *                                                  *
+ * Parameters marked (+) are input, others derived  *
+ ****************************************************
+
+ ****************** Higgs parameters ****************
+ *                                                  *
+ *   mass(H) =  126.00      width(H) =  0.43070E-02 *
+ *                                                  *
+ *              Br( H -> b bbar)  =   0.56954       *
+ *              Br( H -> tau tau) =   0.06056       *
+ *              Br( H -> W W)     =   0.00000       *
+ *              Br( H -> Z Z)     =   0.00000       *
+ *              Br( H -> gam gam) =   0.00235       *
+ *              Br( H -> Z gam)   =   0.00164       *
+ ****************************************************
+ *                                                  *
+ * Note: branching ratios reported here can be > 1  *
+ *       since the total Higgs width is calculated  *
+ *       at NLO but the BR calculation uses a       *
+ *       partial width at LO only.                  *
+ *                                                  *
+ ****************************************************
+
+ WARNING: Higgs decay H->ZZ is below threshold and
+ may not yield sensible results - check the number
+ of integration points
+
+ ***************** CKM mixing matrix ****************
+ *                                                  *
+ *      Vud=.97500    Vus=.22200    Vub=0.0000      *
+ *      Vcd=.22200    Vcs=.97500    Vcb=0.0000      *
+ ****************************************************
+
+ ************* Strong coupling, alpha_s  ************
+ *                                                  *
+ *  Dynamic scale - alpha_s changed event-by-event  *
+ *       alpha_s (zmass)  0.11800000                *
+ *         (using 1-loop running of alpha_s)        *
+ ****************************************************
+
+ ****************************************
+ *     Cross section in femtobarns      *
+ ****************************************
+
+
+ input parameters for vegas:  ndim= 10  ncall= 472392.
+                              it=    0  itmx=   40
+                              nprn=  0  alph= 1.50
+                              mds=  1   nd= 100
+                              xl( 1)=   0.000     xu( 1)=   1.000    
+                              xl( 2)=   0.000     xu( 2)=   1.000    
+                              xl( 3)=   0.000     xu( 3)=   1.000    
+                              xl( 4)=   0.000     xu( 4)=   1.000    
+                              xl( 5)=   0.000     xu( 5)=   1.000    
+                              xl( 6)=   0.000     xu( 6)=   1.000    
+                              xl( 7)=   0.000     xu( 7)=   1.000    
+                              xl( 8)=   0.000     xu( 8)=   1.000    
+                              xl( 9)=   0.000     xu( 9)=   1.000    
+                              xl(10)=   0.000     xu(10)=   1.000    
+
+ ****************** Basic mass cuts *****************
+ *                                                  *
+ *              0.00  <   m34  <  33000.00           *
+ *              0.00  <   m56  <  33000.00           *
+ ****************************************************
+ *********** CMS Higgs Search cuts******
+ *                                     *
+ *     pt(mu) >           5.00 GeV     *
+ *     pt(el) >           7.00 GeV     *
+ *     |eta_mu| <         2.40         *
+ *     |eta_el| <         2.50         *
+ *     m4lmin >         100.00 GeV     *
+ *     m2lmin >           4.00 GeV     *
+ *     ptleading >       20.00 GeV     *
+ *     ptnexttoleading > 10.00 GeV     *
+ *     mllnear >         40.00 GeV     *
+ *     mllfar >          12.00 GeV     *
+ *     mllmax >         120.00 GeV     *
+ ***************************************
+
+ ************** Dynamic scale choice ****************
+ *                                                  *
+ *                 RENORMALIZATION                  *
+ *       mu_ren  =  0.50 x m(3456)                  *
+ *                                                  *
+ *                  FACTORIZATION                   *
+ *       mu_fac  =  0.50 x m(3456)                  *
+ *                                                  *
+ ****************************************************
+ ====================================================
+   This is QCDLoop - version 1.95                    
+   Authors: Keith Ellis and Giulia Zanderighi        
+   (ellis@fnal.gov, g.zanderighi1@physics.ox.ac.uk)  
+   For details see FERMILAB-PUB-07-633-T,OUTP-07/16P 
+   arXiv:0712.1851 [hep-ph], published in            
+   JHEP 0802:002,2008.                               
+ ====================================================
+ ====================================================
+   FF 2.0, a package to evaluate one-loop integrals
+ written by G. J. van Oldenborgh, NIKHEF-H, Amsterdam
+ ====================================================
+ for the algorithms used see preprint NIKHEF-H 89/17,
+ 'New Algorithms for One-loop Integrals', by G.J. van
+ Oldenborgh and J.A.M. Vermaseren, published in 
+ Zeitschrift fuer Physik C46(1990)425.
+ ====================================================
+ ffini: precx =    4.4408920985006262E-016
+ ffini: precc =    4.4408920985006262E-016
+ ffini: xalogm =    4.9406564584124654E-324
+ ffini: xclogm =    4.9406564584124654E-324
+
+************* Integration by Vegas (iteration   1) **************
+*                                                               *
+*  integral  =  1.7523480       accum. integral =  1.7523480    *
+*  std. dev. = 0.95997217E-01   accum. std. dev = 0.95997217E-01*
+*   max. wt. =   0.404436E-01                                   *
+*                                                               *
+**************   chi**2/iteration =  0.000       ****************
+
+
+************* Integration by Vegas (iteration   2) **************
+*                                                               *
+*  integral  =  1.7048656       accum. integral =  1.7125759    *
+*  std. dev. = 0.42267293E-01   accum. std. dev = 0.38683651E-01*
+*   max. wt. =   0.404436E-01                                   *
+*                                                               *
+**************   chi**2/iteration = 0.2029       ****************
+
+
+************* Integration by Vegas (iteration   3) **************
+*                                                               *
+*  integral  =  2.0583391       accum. integral =  1.7210991    *
+*  std. dev. = 0.24333049       accum. std. dev = 0.38203894E-01*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  1.082       ****************
+
+
+************* Integration by Vegas (iteration   4) **************
+*                                                               *
+*  integral  =  1.8930276       accum. integral =  1.7405487    *
+*  std. dev. = 0.10696889       accum. std. dev = 0.35978132E-01*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  1.484       ****************
+
+
+************* Integration by Vegas (iteration   5) **************
+*                                                               *
+*  integral  =  2.2143747       accum. integral =  1.8713309    *
+*  std. dev. = 0.58269190E-01   accum. std. dev = 0.30612861E-01*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  13.05       ****************
+
+
+************* Integration by Vegas (iteration   6) **************
+*                                                               *
+*  integral  =  2.2281095       accum. integral =  2.1375835    *
+*  std. dev. = 0.17850224E-01   accum. std. dev = 0.15420242E-01*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  30.68       ****************
+
+
+************* Integration by Vegas (iteration   7) **************
+*                                                               *
+*  integral  =  2.2104505       accum. integral =  2.1960960    *
+*  std. dev. = 0.76376814E-02   accum. std. dev = 0.68441622E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  28.56       ****************
+
+
+************* Integration by Vegas (iteration   8) **************
+*                                                               *
+*  integral  =  2.2333494       accum. integral =  2.2195971    *
+*  std. dev. = 0.52355514E-02   accum. std. dev = 0.41583793E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  27.15       ****************
+
+
+************* Integration by Vegas (iteration   9) **************
+*                                                               *
+*  integral  =  2.2360353       accum. integral =  2.2269696    *
+*  std. dev. = 0.46112700E-02   accum. std. dev = 0.30881548E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  24.64       ****************
+
+
+************* Integration by Vegas (iteration  10) **************
+*                                                               *
+*  integral  =  2.2306944       accum. integral =  2.2282186    *
+*  std. dev. = 0.43477589E-02   accum. std. dev = 0.25176882E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  21.96       ****************
+
+
+************* Integration by Vegas (iteration  11) **************
+*                                                               *
+*  integral  =  2.2175498       accum. integral =  2.2254226    *
+*  std. dev. = 0.42246782E-02   accum. std. dev = 0.21627565E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  20.23       ****************
+
+
+************* Integration by Vegas (iteration  12) **************
+*                                                               *
+*  integral  =  2.2212277       accum. integral =  2.2246093    *
+*  std. dev. = 0.44100255E-02   accum. std. dev = 0.19418135E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  18.46       ****************
+
+
+************* Integration by Vegas (iteration  13) **************
+*                                                               *
+*  integral  =  2.2306164       accum. integral =  2.2256132    *
+*  std. dev. = 0.43348863E-02   accum. std. dev = 0.17721382E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  17.06       ****************
+
+
+************* Integration by Vegas (iteration  14) **************
+*                                                               *
+*  integral  =  2.2196809       accum. integral =  2.2247525    *
+*  std. dev. = 0.43015960E-02   accum. std. dev = 0.16385376E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  15.87       ****************
+
+
+************* Integration by Vegas (iteration  15) **************
+*                                                               *
+*  integral  =  2.2190462       accum. integral =  2.2240251    *
+*  std. dev. = 0.42869508E-02   accum. std. dev = 0.15305494E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  14.85       ****************
+
+
+************* Integration by Vegas (iteration  16) **************
+*                                                               *
+*  integral  =  2.2246569       accum. integral =  2.2240970    *
+*  std. dev. = 0.42698421E-02   accum. std. dev = 0.14407824E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  13.86       ****************
+
+
+************* Integration by Vegas (iteration  17) **************
+*                                                               *
+*  integral  =  2.2256060       accum. integral =  2.2242515    *
+*  std. dev. = 0.42660875E-02   accum. std. dev = 0.13650354E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  13.00       ****************
+
+
+************* Integration by Vegas (iteration  18) **************
+*                                                               *
+*  integral  =  2.2242542       accum. integral =  2.2242518    *
+*  std. dev. = 0.42745763E-02   accum. std. dev = 0.13003422E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  12.24       ****************
+
+
+************* Integration by Vegas (iteration  19) **************
+*                                                               *
+*  integral  =  2.2166965       accum. integral =  2.2236094    *
+*  std. dev. = 0.42655756E-02   accum. std. dev = 0.12438308E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  11.72       ****************
+
+
+************* Integration by Vegas (iteration  20) **************
+*                                                               *
+*  integral  =  2.2219657       accum. integral =  2.2234801    *
+*  std. dev. = 0.42571195E-02   accum. std. dev = 0.11939138E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  11.11       ****************
+
+
+************* Integration by Vegas (iteration  21) **************
+*                                                               *
+*  integral  =  2.2152531       accum. integral =  2.2228848    *
+*  std. dev. = 0.42747688E-02   accum. std. dev = 0.11499068E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  10.72       ****************
+
+
+************* Integration by Vegas (iteration  22) **************
+*                                                               *
+*  integral  =  2.2259216       accum. integral =  2.2230900    *
+*  std. dev. = 0.42710199E-02   accum. std. dev = 0.11103671E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  10.24       ****************
+
+
+************* Integration by Vegas (iteration  23) **************
+*                                                               *
+*  integral  =  2.2272402       accum. integral =  2.2233478    *
+*  std. dev. = 0.43151379E-02   accum. std. dev = 0.10753369E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  9.811       ****************
+
+
+************* Integration by Vegas (iteration  24) **************
+*                                                               *
+*  integral  =  2.2206463       accum. integral =  2.2231898    *
+*  std. dev. = 0.43156218E-02   accum. std. dev = 0.10434328E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  9.401       ****************
+
+
+************* Integration by Vegas (iteration  25) **************
+*                                                               *
+*  integral  =  2.2252477       accum. integral =  2.2233015    *
+*  std. dev. = 0.43551948E-02   accum. std. dev = 0.10147166E-02*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  9.018       ****************
+
+
+************* Integration by Vegas (iteration  26) **************
+*                                                               *
+*  integral  =  2.2311207       accum. integral =  2.2237085    *
+*  std. dev. = 0.43303017E-02   accum. std. dev = 0.98795466E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  8.781       ****************
+
+
+************* Integration by Vegas (iteration  27) **************
+*                                                               *
+*  integral  =  2.2259270       accum. integral =  2.2238164    *
+*  std. dev. = 0.43713025E-02   accum. std. dev = 0.96364948E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  8.453       ****************
+
+
+************* Integration by Vegas (iteration  28) **************
+*                                                               *
+*  integral  =  2.2290168       accum. integral =  2.2240527    *
+*  std. dev. = 0.44168181E-02   accum. std. dev = 0.94150162E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  8.189       ****************
+
+
+************* Integration by Vegas (iteration  29) **************
+*                                                               *
+*  integral  =  2.2236295       accum. integral =  2.2240371    *
+*  std. dev. = 0.48187190E-02   accum. std. dev = 0.92402940E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  7.897       ****************
+
+
+************* Integration by Vegas (iteration  30) **************
+*                                                               *
+*  integral  =  2.2302899       accum. integral =  2.2242799    *
+*  std. dev. = 0.45971985E-02   accum. std. dev = 0.90591103E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  7.686       ****************
+
+
+************* Integration by Vegas (iteration  31) **************
+*                                                               *
+*  integral  =  2.2310148       accum. integral =  2.2245465    *
+*  std. dev. = 0.44626681E-02   accum. std. dev = 0.88780337E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  7.503       ****************
+
+
+************* Integration by Vegas (iteration  32) **************
+*                                                               *
+*  integral  =  2.2170306       accum. integral =  2.2242545    *
+*  std. dev. = 0.44160209E-02   accum. std. dev = 0.87038807E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  7.350       ****************
+
+
+************* Integration by Vegas (iteration  33) **************
+*                                                               *
+*  integral  =  2.2226217       accum. integral =  2.2241929    *
+*  std. dev. = 0.43974143E-02   accum. std. dev = 0.85382363E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  7.125       ****************
+
+
+************* Integration by Vegas (iteration  34) **************
+*                                                               *
+*  integral  =  2.2275415       accum. integral =  2.2243139    *
+*  std. dev. = 0.44106045E-02   accum. std. dev = 0.83826122E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.926       ****************
+
+
+************* Integration by Vegas (iteration  35) **************
+*                                                               *
+*  integral  =  2.2313582       accum. integral =  2.2245590    *
+*  std. dev. = 0.44144457E-02   accum. std. dev = 0.82354486E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.795       ****************
+
+
+************* Integration by Vegas (iteration  36) **************
+*                                                               *
+*  integral  =  2.2216420       accum. integral =  2.2244606    *
+*  std. dev. = 0.44075209E-02   accum. std. dev = 0.80953450E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.613       ****************
+
+
+************* Integration by Vegas (iteration  37) **************
+*                                                               *
+*  integral  =  2.2290339       accum. integral =  2.2246067    *
+*  std. dev. = 0.44563939E-02   accum. std. dev = 0.79649924E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.457       ****************
+
+
+************* Integration by Vegas (iteration  38) **************
+*                                                               *
+*  integral  =  2.2298825       accum. integral =  2.2247687    *
+*  std. dev. = 0.44747343E-02   accum. std. dev = 0.78417335E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.319       ****************
+
+
+************* Integration by Vegas (iteration  39) **************
+*                                                               *
+*  integral  =  2.2254078       accum. integral =  2.2247876    *
+*  std. dev. = 0.44960356E-02   accum. std. dev = 0.77251133E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.153       ****************
+
+
+************* Integration by Vegas (iteration  40) **************
+*                                                               *
+*  integral  =  2.2277731       accum. integral =  2.2248732    *
+*  std. dev. = 0.44971378E-02   accum. std. dev = 0.76135995E-03*
+*   max. wt. =   0.190831                                       *
+*                                                               *
+**************   chi**2/iteration =  6.007       ****************
+
+
+ input parameters for vegas:  ndim= 10  ncall= 472392.
+                              it=   41  itmx=  100
+                              nprn=  0  alph= 1.50
+                              mds=  1   nd= 100
+                              xl( 1)=   0.000     xu( 1)=   1.000    
+                              xl( 2)=   0.000     xu( 2)=   1.000    
+                              xl( 3)=   0.000     xu( 3)=   1.000    
+                              xl( 4)=   0.000     xu( 4)=   1.000    
+                              xl( 5)=   0.000     xu( 5)=   1.000    
+                              xl( 6)=   0.000     xu( 6)=   1.000    
+                              xl( 7)=   0.000     xu( 7)=   1.000    
+                              xl( 8)=   0.000     xu( 8)=   1.000    
+                              xl( 9)=   0.000     xu( 9)=   1.000    
+                              xl(10)=   0.000     xu(10)=   1.000    
+
+************* Integration by Vegas (iteration   1) **************
+*                                                               *
+*  integral  =  2.2230058       accum. integral =  2.2230058    *
+*  std. dev. = 0.46610092E-02   accum. std. dev = 0.46610092E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  0.000       ****************
+
+ Writing out intermediate results for iteration           1
+
+************* Integration by Vegas (iteration   2) **************
+*                                                               *
+*  integral  =  2.2268396       accum. integral =  2.2249210    *
+*  std. dev. = 0.46651621E-02   accum. std. dev = 0.32972985E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.3346       ****************
+
+ Writing out intermediate results for iteration           2
+
+************* Integration by Vegas (iteration   3) **************
+*                                                               *
+*  integral  =  2.2264682       accum. integral =  2.2254312    *
+*  std. dev. = 0.47010318E-02   accum. std. dev = 0.26994769E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.2043       ****************
+
+ Writing out intermediate results for iteration           3
+
+************* Integration by Vegas (iteration   4) **************
+*                                                               *
+*  integral  =  2.2191386       accum. integral =  2.2238383    *
+*  std. dev. = 0.46367863E-02   accum. std. dev = 0.23329142E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.5934       ****************
+
+ Writing out intermediate results for iteration           4
+
+************* Integration by Vegas (iteration   5) **************
+*                                                               *
+*  integral  =  2.2164028       accum. integral =  2.2223101    *
+*  std. dev. = 0.45867151E-02   accum. std. dev = 0.20793994E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.9661       ****************
+
+ Writing out intermediate results for iteration           5
+
+************* Integration by Vegas (iteration   6) **************
+*                                                               *
+*  integral  =  2.2235822       accum. integral =  2.2225224    *
+*  std. dev. = 0.46457097E-02   accum. std. dev = 0.18979529E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.7857       ****************
+
+ Writing out intermediate results for iteration           6
+
+************* Integration by Vegas (iteration   7) **************
+*                                                               *
+*  integral  =  2.2300559       accum. integral =  2.2235957    *
+*  std. dev. = 0.46563009E-02   accum. std. dev = 0.17575555E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.028       ****************
+
+ Writing out intermediate results for iteration           7
+
+************* Integration by Vegas (iteration   8) **************
+*                                                               *
+*  integral  =  2.2262658       accum. integral =  2.2239274    *
+*  std. dev. = 0.46667554E-02   accum. std. dev = 0.16447772E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.9226       ****************
+
+ Writing out intermediate results for iteration           8
+
+************* Integration by Vegas (iteration   9) **************
+*                                                               *
+*  integral  =  2.2210804       accum. integral =  2.2236115    *
+*  std. dev. = 0.46561844E-02   accum. std. dev = 0.15508607E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration = 0.8490       ****************
+
+ Writing out intermediate results for iteration           9
+
+************* Integration by Vegas (iteration  10) **************
+*                                                               *
+*  integral  =  2.2332299       accum. integral =  2.2245583    *
+*  std. dev. = 0.46934500E-02   accum. std. dev = 0.14725529E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.175       ****************
+
+ Writing out intermediate results for iteration          10
+
+************* Integration by Vegas (iteration  11) **************
+*                                                               *
+*  integral  =  2.2326860       accum. integral =  2.2252835    *
+*  std. dev. = 0.47048706E-02   accum. std. dev = 0.14053281E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.329       ****************
+
+ Writing out intermediate results for iteration          11
+
+************* Integration by Vegas (iteration  12) **************
+*                                                               *
+*  integral  =  2.2308510       accum. integral =  2.2257456    *
+*  std. dev. = 0.46712087E-02   accum. std. dev = 0.13457454E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.327       ****************
+
+ Writing out intermediate results for iteration          12
+
+************* Integration by Vegas (iteration  13) **************
+*                                                               *
+*  integral  =  2.2143621       accum. integral =  2.2249113    *
+*  std. dev. = 0.47853454E-02   accum. std. dev = 0.12954924E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.653       ****************
+
+ Writing out intermediate results for iteration          13
+
+************* Integration by Vegas (iteration  14) **************
+*                                                               *
+*  integral  =  2.2182889       accum. integral =  2.2244605    *
+*  std. dev. = 0.47935792E-02   accum. std. dev = 0.12506255E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.663       ****************
+
+ Writing out intermediate results for iteration          14
+
+************* Integration by Vegas (iteration  15) **************
+*                                                               *
+*  integral  =  2.2217585       accum. integral =  2.2242899    *
+*  std. dev. = 0.48172592E-02   accum. std. dev = 0.12104974E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.565       ****************
+
+ Writing out intermediate results for iteration          15
+
+************* Integration by Vegas (iteration  16) **************
+*                                                               *
+*  integral  =  2.2355550       accum. integral =  2.2249384    *
+*  std. dev. = 0.48977504E-02   accum. std. dev = 0.11751378E-02*
+*   max. wt. =   0.494157E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.793       ****************
+
+ Writing out intermediate results for iteration          16
+
+************* Integration by Vegas (iteration  17) **************
+*                                                               *
+*  integral  =  2.2191573       accum. integral =  2.2246712    *
+*  std. dev. = 0.53378149E-02   accum. std. dev = 0.11476549E-02*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.751       ****************
+
+ Writing out intermediate results for iteration          17
+
+************* Integration by Vegas (iteration  18) **************
+*                                                               *
+*  integral  =  2.2313186       accum. integral =  2.2249891    *
+*  std. dev. = 0.51207168E-02   accum. std. dev = 0.11198739E-02*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.742       ****************
+
+ Writing out intermediate results for iteration          18
+
+************* Integration by Vegas (iteration  19) **************
+*                                                               *
+*  integral  =  2.2316150       accum. integral =  2.2253008    *
+*  std. dev. = 0.50400404E-02   accum. std. dev = 0.10932126E-02*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.737       ****************
+
+ Writing out intermediate results for iteration          19
+
+************* Integration by Vegas (iteration  20) **************
+*                                                               *
+*  integral  =  2.2172025       accum. integral =  2.2249174    *
+*  std. dev. = 0.49034513E-02   accum. std. dev = 0.10670159E-02*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.782       ****************
+
+ Writing out intermediate results for iteration          20
+
+************* Integration by Vegas (iteration  21) **************
+*                                                               *
+*  integral  =  2.2143946       accum. integral =  2.2244308    *
+*  std. dev. = 0.48461097E-02   accum. std. dev = 0.10420558E-02*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.918       ****************
+
+ Writing out intermediate results for iteration          21
+
+************* Integration by Vegas (iteration  22) **************
+*                                                               *
+*  integral  =  2.2168314       accum. integral =  2.2240906    *
+*  std. dev. = 0.48133712E-02   accum. std. dev = 0.10184621E-02*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.940       ****************
+
+ Writing out intermediate results for iteration          22
+
+************* Integration by Vegas (iteration  23) **************
+*                                                               *
+*  integral  =  2.2215851       accum. integral =  2.2239821    *
+*  std. dev. = 0.47882221E-02   accum. std. dev = 0.99617686E-03*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.864       ****************
+
+ Writing out intermediate results for iteration          23
+
+************* Integration by Vegas (iteration  24) **************
+*                                                               *
+*  integral  =  2.2311676       accum. integral =  2.2242750    *
+*  std. dev. = 0.48324784E-02   accum. std. dev = 0.97566238E-03*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.875       ****************
+
+ Writing out intermediate results for iteration          24
+
+************* Integration by Vegas (iteration  25) **************
+*                                                               *
+*  integral  =  2.2245635       accum. integral =  2.2242860    *
+*  std. dev. = 0.49003560E-02   accum. std. dev = 0.95688087E-03*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.797       ****************
+
+ Writing out intermediate results for iteration          25
+
+************* Integration by Vegas (iteration  26) **************
+*                                                               *
+*  integral  =  2.2222658       accum. integral =  2.2242111    *
+*  std. dev. = 0.48742665E-02   accum. std. dev = 0.93895878E-03*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.732       ****************
+
+ Writing out intermediate results for iteration          26
+
+************* Integration by Vegas (iteration  27) **************
+*                                                               *
+*  integral  =  2.2309347       accum. integral =  2.2244381    *
+*  std. dev. = 0.50231862E-02   accum. std. dev = 0.92297247E-03*
+*   max. wt. =   0.782227E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.732       ****************
+
+ Writing out intermediate results for iteration          27
+
+************* Integration by Vegas (iteration  28) **************
+*                                                               *
+*  integral  =  2.2368251       accum. integral =  2.2248090    *
+*  std. dev. = 0.52531858E-02   accum. std. dev = 0.90904810E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.867       ****************
+
+ Writing out intermediate results for iteration          28
+
+************* Integration by Vegas (iteration  29) **************
+*                                                               *
+*  integral  =  2.2238305       accum. integral =  2.2247785    *
+*  std. dev. = 0.50664600E-02   accum. std. dev = 0.89475959E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.802       ****************
+
+ Writing out intermediate results for iteration          29
+
+************* Integration by Vegas (iteration  30) **************
+*                                                               *
+*  integral  =  2.2287003       accum. integral =  2.2249062    *
+*  std. dev. = 0.48778349E-02   accum. std. dev = 0.88007572E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.761       ****************
+
+ Writing out intermediate results for iteration          30
+
+************* Integration by Vegas (iteration  31) **************
+*                                                               *
+*  integral  =  2.2226817       accum. integral =  2.2248332    *
+*  std. dev. = 0.47789353E-02   accum. std. dev = 0.86552148E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.710       ****************
+
+ Writing out intermediate results for iteration          31
+
+************* Integration by Vegas (iteration  32) **************
+*                                                               *
+*  integral  =  2.2206520       accum. integral =  2.2247005    *
+*  std. dev. = 0.47806593E-02   accum. std. dev = 0.85167598E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.678       ****************
+
+ Writing out intermediate results for iteration          32
+
+************* Integration by Vegas (iteration  33) **************
+*                                                               *
+*  integral  =  2.2210371       accum. integral =  2.2245877    *
+*  std. dev. = 0.47778244E-02   accum. std. dev = 0.83845905E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.644       ****************
+
+ Writing out intermediate results for iteration          33
+
+************* Integration by Vegas (iteration  34) **************
+*                                                               *
+*  integral  =  2.2257434       accum. integral =  2.2246222    *
+*  std. dev. = 0.47760257E-02   accum. std. dev = 0.82582965E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.596       ****************
+
+ Writing out intermediate results for iteration          34
+
+************* Integration by Vegas (iteration  35) **************
+*                                                               *
+*  integral  =  2.2261050       accum. integral =  2.2246641    *
+*  std. dev. = 0.48462359E-02   accum. std. dev = 0.81409426E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.551       ****************
+
+ Writing out intermediate results for iteration          35
+
+************* Integration by Vegas (iteration  36) **************
+*                                                               *
+*  integral  =  2.2215098       accum. integral =  2.2245742    *
+*  std. dev. = 0.47533044E-02   accum. std. dev = 0.80241072E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.519       ****************
+
+ Writing out intermediate results for iteration          36
+
+************* Integration by Vegas (iteration  37) **************
+*                                                               *
+*  integral  =  2.2233191       accum. integral =  2.2245404    *
+*  std. dev. = 0.48283732E-02   accum. std. dev = 0.79155460E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.479       ****************
+
+ Writing out intermediate results for iteration          37
+
+************* Integration by Vegas (iteration  38) **************
+*                                                               *
+*  integral  =  2.2224487       accum. integral =  2.2244863    *
+*  std. dev. = 0.48570542E-02   accum. std. dev = 0.78124790E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.444       ****************
+
+ Writing out intermediate results for iteration          38
+
+************* Integration by Vegas (iteration  39) **************
+*                                                               *
+*  integral  =  2.2235365       accum. integral =  2.2244628    *
+*  std. dev. = 0.48982835E-02   accum. std. dev = 0.77149670E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.407       ****************
+
+ Writing out intermediate results for iteration          39
+
+************* Integration by Vegas (iteration  40) **************
+*                                                               *
+*  integral  =  2.2252704       accum. integral =  2.2244819    *
+*  std. dev. = 0.49490181E-02   accum. std. dev = 0.76228997E-03*
+*   max. wt. =   0.803109E-03                                   *
+*                                                               *
+**************   chi**2/iteration =  1.371       ****************
+
+ Writing out intermediate results for iteration          40
+
+************* Integration by Vegas (iteration  41) **************
+*                                                               *
+*  integral  =  2.2258862       accum. integral =  2.2245120    *
+*  std. dev. = 0.51567163E-02   accum. std. dev = 0.75409520E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.339       ****************
+
+ Writing out intermediate results for iteration          41
+
+************* Integration by Vegas (iteration  42) **************
+*                                                               *
+*  integral  =  2.2333551       accum. integral =  2.2246902    *
+*  std. dev. = 0.52581117E-02   accum. std. dev = 0.74645769E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.374       ****************
+
+ Writing out intermediate results for iteration          42
+
+************* Integration by Vegas (iteration  43) **************
+*                                                               *
+*  integral  =  2.2174650       accum. integral =  2.2245407    *
+*  std. dev. = 0.51359904E-02   accum. std. dev = 0.73869660E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.387       ****************
+
+ Writing out intermediate results for iteration          43
+
+************* Integration by Vegas (iteration  44) **************
+*                                                               *
+*  integral  =  2.2222720       accum. integral =  2.2244973    *
+*  std. dev. = 0.52905777E-02   accum. std. dev = 0.73159971E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.359       ****************
+
+ Writing out intermediate results for iteration          44
+
+************* Integration by Vegas (iteration  45) **************
+*                                                               *
+*  integral  =  2.2146209       accum. integral =  2.2242981    *
+*  std. dev. = 0.50994507E-02   accum. std. dev = 0.72418487E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.412       ****************
+
+ Writing out intermediate results for iteration          45
+
+************* Integration by Vegas (iteration  46) **************
+*                                                               *
+*  integral  =  2.2290686       accum. integral =  2.2243939    *
+*  std. dev. = 0.50608431E-02   accum. std. dev = 0.71688248E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.400       ****************
+
+ Writing out intermediate results for iteration          46
+
+************* Integration by Vegas (iteration  47) **************
+*                                                               *
+*  integral  =  2.2313606       accum. integral =  2.2245305    *
+*  std. dev. = 0.50688961E-02   accum. std. dev = 0.70981880E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.410       ****************
+
+ Writing out intermediate results for iteration          47
+
+************* Integration by Vegas (iteration  48) **************
+*                                                               *
+*  integral  =  2.2251096       accum. integral =  2.2245420    *
+*  std. dev. = 0.49831063E-02   accum. std. dev = 0.70272525E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.380       ****************
+
+ Writing out intermediate results for iteration          48
+
+************* Integration by Vegas (iteration  49) **************
+*                                                               *
+*  integral  =  2.2273899       accum. integral =  2.2245971    *
+*  std. dev. = 0.50031612E-02   accum. std. dev = 0.69589448E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.358       ****************
+
+ Writing out intermediate results for iteration          49
+
+************* Integration by Vegas (iteration  50) **************
+*                                                               *
+*  integral  =  2.2253385       accum. integral =  2.2246110    *
+*  std. dev. = 0.50300001E-02   accum. std. dev = 0.68932874E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.331       ****************
+
+ Writing out intermediate results for iteration          50
+
+************* Integration by Vegas (iteration  51) **************
+*                                                               *
+*  integral  =  2.2165074       accum. integral =  2.2244639    *
+*  std. dev. = 0.50701570E-02   accum. std. dev = 0.68304474E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.354       ****************
+
+ Writing out intermediate results for iteration          51
+
+************* Integration by Vegas (iteration  52) **************
+*                                                               *
+*  integral  =  2.2277930       accum. integral =  2.2245238    *
+*  std. dev. = 0.50476505E-02   accum. std. dev = 0.67687561E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.336       ****************
+
+ Writing out intermediate results for iteration          52
+
+************* Integration by Vegas (iteration  53) **************
+*                                                               *
+*  integral  =  2.2230742       accum. integral =  2.2244987    *
+*  std. dev. = 0.50989593E-02   accum. std. dev = 0.67098935E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.312       ****************
+
+ Writing out intermediate results for iteration          53
+
+************* Integration by Vegas (iteration  54) **************
+*                                                               *
+*  integral  =  2.2296031       accum. integral =  2.2245811    *
+*  std. dev. = 0.52383167E-02   accum. std. dev = 0.66555148E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.305       ****************
+
+ Writing out intermediate results for iteration          54
+
+************* Integration by Vegas (iteration  55) **************
+*                                                               *
+*  integral  =  2.2221635       accum. integral =  2.2245420    *
+*  std. dev. = 0.51932531E-02   accum. std. dev = 0.66015232E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.284       ****************
+
+ Writing out intermediate results for iteration          55
+
+************* Integration by Vegas (iteration  56) **************
+*                                                               *
+*  integral  =  2.2220655       accum. integral =  2.2245027    *
+*  std. dev. = 0.51976983E-02   accum. std. dev = 0.65489137E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.265       ****************
+
+ Writing out intermediate results for iteration          56
+
+************* Integration by Vegas (iteration  57) **************
+*                                                               *
+*  integral  =  2.2196226       accum. integral =  2.2244200    *
+*  std. dev. = 0.49863866E-02   accum. std. dev = 0.64931526E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.259       ****************
+
+ Writing out intermediate results for iteration          57
+
+************* Integration by Vegas (iteration  58) **************
+*                                                               *
+*  integral  =  2.2203448       accum. integral =  2.2243504    *
+*  std. dev. = 0.49277124E-02   accum. std. dev = 0.64375064E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.249       ****************
+
+ Writing out intermediate results for iteration          58
+
+************* Integration by Vegas (iteration  59) **************
+*                                                               *
+*  integral  =  2.2220029       accum. integral =  2.2243115    *
+*  std. dev. = 0.49561574E-02   accum. std. dev = 0.63838799E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.231       ****************
+
+ Writing out intermediate results for iteration          59
+
+************* Integration by Vegas (iteration  60) **************
+*                                                               *
+*  integral  =  2.2251982       accum. integral =  2.2243258    *
+*  std. dev. = 0.49904014E-02   accum. std. dev = 0.63322784E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.211       ****************
+
+ Writing out intermediate results for iteration          60
+
+************* Integration by Vegas (iteration  61) **************
+*                                                               *
+*  integral  =  2.2190878       accum. integral =  2.2242437    *
+*  std. dev. = 0.50188107E-02   accum. std. dev = 0.62824702E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.209       ****************
+
+ Writing out intermediate results for iteration          61
+
+************* Integration by Vegas (iteration  62) **************
+*                                                               *
+*  integral  =  2.2284714       accum. integral =  2.2243078    *
+*  std. dev. = 0.50621238E-02   accum. std. dev = 0.62346387E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.200       ****************
+
+ Writing out intermediate results for iteration          62
+
+************* Integration by Vegas (iteration  63) **************
+*                                                               *
+*  integral  =  2.2315922       accum. integral =  2.2244158    *
+*  std. dev. = 0.50833738E-02   accum. std. dev = 0.61882691E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.213       ****************
+
+ Writing out intermediate results for iteration          63
+
+************* Integration by Vegas (iteration  64) **************
+*                                                               *
+*  integral  =  2.2207898       accum. integral =  2.2243618    *
+*  std. dev. = 0.50372797E-02   accum. std. dev = 0.61420944E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.202       ****************
+
+ Writing out intermediate results for iteration          64
+
+************* Integration by Vegas (iteration  65) **************
+*                                                               *
+*  integral  =  2.2295612       accum. integral =  2.2244344    *
+*  std. dev. = 0.51632073E-02   accum. std. dev = 0.60990913E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.199       ****************
+
+ Writing out intermediate results for iteration          65
+
+************* Integration by Vegas (iteration  66) **************
+*                                                               *
+*  integral  =  2.2285950       accum. integral =  2.2244915    *
+*  std. dev. = 0.51706826E-02   accum. std. dev = 0.60570993E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.191       ****************
+
+ Writing out intermediate results for iteration          66
+
+************* Integration by Vegas (iteration  67) **************
+*                                                               *
+*  integral  =  2.2249083       accum. integral =  2.2244972    *
+*  std. dev. = 0.51356349E-02   accum. std. dev = 0.60154053E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.173       ****************
+
+ Writing out intermediate results for iteration          67
+
+************* Integration by Vegas (iteration  68) **************
+*                                                               *
+*  integral  =  2.2265858       accum. integral =  2.2245249    *
+*  std. dev. = 0.51943358E-02   accum. std. dev = 0.59754694E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.157       ****************
+
+ Writing out intermediate results for iteration          68
+
+************* Integration by Vegas (iteration  69) **************
+*                                                               *
+*  integral  =  2.2223265       accum. integral =  2.2244960    *
+*  std. dev. = 0.51853155E-02   accum. std. dev = 0.59361836E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.143       ****************
+
+ Writing out intermediate results for iteration          69
+
+************* Integration by Vegas (iteration  70) **************
+*                                                               *
+*  integral  =  2.2205097       accum. integral =  2.2244493    *
+*  std. dev. = 0.54515291E-02   accum. std. dev = 0.59013006E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.134       ****************
+
+ Writing out intermediate results for iteration          70
+
+************* Integration by Vegas (iteration  71) **************
+*                                                               *
+*  integral  =  2.2233641       accum. integral =  2.2244350    *
+*  std. dev. = 0.51072078E-02   accum. std. dev = 0.58622952E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.119       ****************
+
+ Writing out intermediate results for iteration          71
+
+************* Integration by Vegas (iteration  72) **************
+*                                                               *
+*  integral  =  2.2175633       accum. integral =  2.2243427    *
+*  std. dev. = 0.50242115E-02   accum. std. dev = 0.58227922E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.129       ****************
+
+ Writing out intermediate results for iteration          72
+
+************* Integration by Vegas (iteration  73) **************
+*                                                               *
+*  integral  =  2.2277330       accum. integral =  2.2243880    *
+*  std. dev. = 0.50057217E-02   accum. std. dev = 0.57837935E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.119       ****************
+
+ Writing out intermediate results for iteration          73
+
+************* Integration by Vegas (iteration  74) **************
+*                                                               *
+*  integral  =  2.2319578       accum. integral =  2.2244887    *
+*  std. dev. = 0.49813910E-02   accum. std. dev = 0.57451975E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.135       ****************
+
+ Writing out intermediate results for iteration          74
+
+************* Integration by Vegas (iteration  75) **************
+*                                                               *
+*  integral  =  2.2227524       accum. integral =  2.2244661    *
+*  std. dev. = 0.50097920E-02   accum. std. dev = 0.57077875E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.122       ****************
+
+ Writing out intermediate results for iteration          75
+
+************* Integration by Vegas (iteration  76) **************
+*                                                               *
+*  integral  =  2.2230168       accum. integral =  2.2244478    *
+*  std. dev. = 0.50394089E-02   accum. std. dev = 0.56715248E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.108       ****************
+
+ Writing out intermediate results for iteration          76
+
+************* Integration by Vegas (iteration  77) **************
+*                                                               *
+*  integral  =  2.2267867       accum. integral =  2.2244774    *
+*  std. dev. = 0.50064767E-02   accum. std. dev = 0.56354794E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.096       ****************
+
+ Writing out intermediate results for iteration          77
+
+************* Integration by Vegas (iteration  78) **************
+*                                                               *
+*  integral  =  2.2229835       accum. integral =  2.2244585    *
+*  std. dev. = 0.49751394E-02   accum. std. dev = 0.55996700E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.083       ****************
+
+ Writing out intermediate results for iteration          78
+
+************* Integration by Vegas (iteration  79) **************
+*                                                               *
+*  integral  =  2.2208188       accum. integral =  2.2244143    *
+*  std. dev. = 0.50520216E-02   accum. std. dev = 0.55655863E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.076       ****************
+
+ Writing out intermediate results for iteration          79
+
+************* Integration by Vegas (iteration  80) **************
+*                                                               *
+*  integral  =  2.2345044       accum. integral =  2.2245367    *
+*  std. dev. = 0.50237954E-02   accum. std. dev = 0.55317437E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.112       ****************
+
+ Writing out intermediate results for iteration          80
+
+************* Integration by Vegas (iteration  81) **************
+*                                                               *
+*  integral  =  2.2250394       accum. integral =  2.2245428    *
+*  std. dev. = 0.49958146E-02   accum. std. dev = 0.54981411E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.099       ****************
+
+ Writing out intermediate results for iteration          81
+
+************* Integration by Vegas (iteration  82) **************
+*                                                               *
+*  integral  =  2.2253971       accum. integral =  2.2245532    *
+*  std. dev. = 0.49484069E-02   accum. std. dev = 0.54645141E-03*
+*   max. wt. =   0.134345E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.085       ****************
+
+ Writing out intermediate results for iteration          82
+
+************* Integration by Vegas (iteration  83) **************
+*                                                               *
+*  integral  =  2.2184680       accum. integral =  2.2244968    *
+*  std. dev. = 0.56524862E-02   accum. std. dev = 0.54391561E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.086       ****************
+
+ Writing out intermediate results for iteration          83
+
+************* Integration by Vegas (iteration  84) **************
+*                                                               *
+*  integral  =  2.2183043       accum. integral =  2.2244376    *
+*  std. dev. = 0.55341813E-02   accum. std. dev = 0.54130751E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.088       ****************
+
+ Writing out intermediate results for iteration          84
+
+************* Integration by Vegas (iteration  85) **************
+*                                                               *
+*  integral  =  2.2287834       accum. integral =  2.2244868    *
+*  std. dev. = 0.50554319E-02   accum. std. dev = 0.53823091E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.084       ****************
+
+ Writing out intermediate results for iteration          85
+
+************* Integration by Vegas (iteration  86) **************
+*                                                               *
+*  integral  =  2.2253982       accum. integral =  2.2244974    *
+*  std. dev. = 0.49770140E-02   accum. std. dev = 0.53511095E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.071       ****************
+
+ Writing out intermediate results for iteration          86
+
+************* Integration by Vegas (iteration  87) **************
+*                                                               *
+*  integral  =  2.2205153       accum. integral =  2.2244512    *
+*  std. dev. = 0.49397311E-02   accum. std. dev = 0.53199857E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.066       ****************
+
+ Writing out intermediate results for iteration          87
+
+************* Integration by Vegas (iteration  88) **************
+*                                                               *
+*  integral  =  2.2164831       accum. integral =  2.2243616    *
+*  std. dev. = 0.49903556E-02   accum. std. dev = 0.52900109E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.083       ****************
+
+ Writing out intermediate results for iteration          88
+
+************* Integration by Vegas (iteration  89) **************
+*                                                               *
+*  integral  =  2.2297496       accum. integral =  2.2244212    *
+*  std. dev. = 0.50018383E-02   accum. std. dev = 0.52606712E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.084       ****************
+
+ Writing out intermediate results for iteration          89
+
+************* Integration by Vegas (iteration  90) **************
+*                                                               *
+*  integral  =  2.2296018       accum. integral =  2.2244774    *
+*  std. dev. = 0.50265977E-02   accum. std. dev = 0.52320956E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.084       ****************
+
+ Writing out intermediate results for iteration          90
+
+************* Integration by Vegas (iteration  91) **************
+*                                                               *
+*  integral  =  2.2219355       accum. integral =  2.2244494    *
+*  std. dev. = 0.49572385E-02   accum. std. dev = 0.52031950E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.074       ****************
+
+ Writing out intermediate results for iteration          91
+
+************* Integration by Vegas (iteration  92) **************
+*                                                               *
+*  integral  =  2.2178780       accum. integral =  2.2243751    *
+*  std. dev. = 0.48679351E-02   accum. std. dev = 0.51737244E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.082       ****************
+
+ Writing out intermediate results for iteration          92
+
+************* Integration by Vegas (iteration  93) **************
+*                                                               *
+*  integral  =  2.2169273       accum. integral =  2.2242918    *
+*  std. dev. = 0.48645067E-02   accum. std. dev = 0.51447084E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.096       ****************
+
+ Writing out intermediate results for iteration          93
+
+************* Integration by Vegas (iteration  94) **************
+*                                                               *
+*  integral  =  2.2291106       accum. integral =  2.2243427    *
+*  std. dev. = 0.49796312E-02   accum. std. dev = 0.51174690E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.094       ****************
+
+ Writing out intermediate results for iteration          94
+
+************* Integration by Vegas (iteration  95) **************
+*                                                               *
+*  integral  =  2.2339756       accum. integral =  2.2244409    *
+*  std. dev. = 0.50435394E-02   accum. std. dev = 0.50913277E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.121       ****************
+
+ Writing out intermediate results for iteration          95
+
+************* Integration by Vegas (iteration  96) **************
+*                                                               *
+*  integral  =  2.2225061       accum. integral =  2.2244211    *
+*  std. dev. = 0.50116844E-02   accum. std. dev = 0.50652572E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.110       ****************
+
+ Writing out intermediate results for iteration          96
+
+************* Integration by Vegas (iteration  97) **************
+*                                                               *
+*  integral  =  2.2204768       accum. integral =  2.2243807    *
+*  std. dev. = 0.49786066E-02   accum. std. dev = 0.50392434E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.105       ****************
+
+ Writing out intermediate results for iteration          97
+
+************* Integration by Vegas (iteration  98) **************
+*                                                               *
+*  integral  =  2.2255363       accum. integral =  2.2243912    *
+*  std. dev. = 0.52694113E-02   accum. std. dev = 0.50163571E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.094       ****************
+
+ Writing out intermediate results for iteration          98
+
+************* Integration by Vegas (iteration  99) **************
+*                                                               *
+*  integral  =  2.2312352       accum. integral =  2.2244544    *
+*  std. dev. = 0.51970507E-02   accum. std. dev = 0.49931511E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.101       ****************
+
+ Writing out intermediate results for iteration          99
+
+************* Integration by Vegas (iteration 100) **************
+*                                                               *
+*  integral  =  2.2282876       accum. integral =  2.2244911    *
+*  std. dev. = 0.50794629E-02   accum. std. dev = 0.49692001E-03*
+*   max. wt. =   0.144171E-02                                   *
+*                                                               *
+**************   chi**2/iteration =  1.095       ****************
+
+
+Value of final lord integral is        2.2245 +/-     0.0005 fb
+
+ Total number of shots       :     47239200
+ Total no. failing cuts      :     20243934
+ Number failing jet cuts     :            0
+ Number failing process cuts :            0
+
+   Jet efficiency : 100.00%
+   Cut efficiency : 100.00%
+ Total efficiency : 100.00%
+
+ Contribution from parton sub-processes:
+ ---------------------------------------
+       GG     |           2.22449  100.00%
+       GQ     |           0.00000    0.00%
+       GQB    |           0.00000    0.00%
+       QG     |           0.00000    0.00%
+       QBG    |           0.00000    0.00%
+       QQ     |           0.00000    0.00%
+       QBQB   |           0.00000    0.00%
+       QQB    |           0.00000    0.00%
+       QBQ    |           0.00000    0.00%
+ ---------------------------------------
+
+ ****************************************************
+ output files  E_var/E_33/CTEQ/TOP/HZZ_tb_lord_cteq6_l_0___0___126_128_run_33
+ ****************************************************
