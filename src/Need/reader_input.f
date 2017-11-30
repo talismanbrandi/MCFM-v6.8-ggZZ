@@ -66,11 +66,17 @@ c--- APPLgrid - end
       double precision ran2,randummy
       double precision cmass,bmass
       double precision alphas
-      
+c --- BEGIN MODIFICATION for MODS-2      
+      double precision ct,cg
+
+      common/ct/ct
+      common/cg/cg
+c --- END MODIFICATION for MODS-2
+
       common/spira/spira
       common/nmin/nmin
       common/nmax/nmax
-      common/rtsmin/rtsmin 
+      common/rtsmin/rtsmin
 
       common/nproc/nproc
       common/energy/sqrts
@@ -78,9 +84,9 @@ c--- APPLgrid - end
       common/iterat/itmx1,ncall1,itmx2,ncall2
       common/ranno/idum
       common/dryrun/dryrun
-      
+
       common/pdflib/NPTYPE,NGROUP,NSET
-      
+
       common/Rcut/Rcut
       common/makecuts/makecuts
 
@@ -93,7 +99,7 @@ c--- APPLgrid - end
       data cttH/1.0d0/
       data cWWH/1.0d0/
 
-      
+
       verbose=.true.
 
       werkdir=workdir
@@ -111,7 +117,7 @@ c--- read-in the user inputs
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- flags for the mode of MCFM   
+c--- flags for the mode of MCFM
       read(20,*) nevtrequested
       if (verbose) call writeinput(6,' * ',' ','nevtrequested')
       read(20,*) creatent
@@ -179,13 +185,13 @@ c------ normal case
       read(20,*) facscale
       initfacscale=facscale
       if (verbose) call writeinput(6,' * ',' ','facscale')
-      
+
       initrenscale_L=0d0
       initfacscale_L=0d0
       initrenscale_H=0d0
       initfacscale_H=0d0
 c--- catch special scale choices for stop+b process
-      if (((nproc .ge. 231) .and. (nproc .le. 240)) .and.      
+      if (((nproc .ge. 231) .and. (nproc .le. 240)) .and.
      .     (scale .eq. 0d0) .and. (facscale .eq. 0d0)) then
         read(20,*) initrenscale_L
       renscale_L=initrenscale_L
@@ -200,10 +206,10 @@ c--- catch special scale choices for stop+b process
       facscale_H=initfacscale_H
         if (verbose) call writeinput(6,' * ',' ','facscale_H')
       scale=initrenscale_H
-      facscale=initfacscale_H        
+      facscale=initfacscale_H
       endif
 
-      read(20,*) dynstring 
+      read(20,*) dynstring
       if (verbose) call writeinput(6,' * ',' ','dynamicscale')
       read(20,*) zerowidth
       if (verbose) call writeinput(6,' * ',' ','zerowidth')
@@ -225,13 +231,13 @@ c--- catch special scale choices for stop+b process
       if (verbose) call writeinput(6,' * ',' ','Qflag')
       read(20,*) Gflag
       if (verbose) call writeinput(6,' * ',' ','Gflag')
-      
+
       if (verbose) write(6,*)
       read(20,99) line
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- heavy quark masses 
+c--- heavy quark masses
       read(20,*) mt
       if (verbose) call writeinput(6,' * ',' ','top mass')
       read(20,*) mb
@@ -244,7 +250,7 @@ c--- heavy quark masses
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- pdf options 
+c--- pdf options
       read(20,*) pdlabel
       if (verbose) call writeinput(6,' * ',' ','pdlabel')
       read(20,*) NGROUP
@@ -261,18 +267,18 @@ c--- pdf options
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- jets and cuts options 
+c--- jets and cuts options
       read(20,*) Mwmin
       wsqmin=Mwmin**2
       if (verbose) call writeinput(6,' * ',' ','m34min')
-      read(20,*) Mwmax 
+      read(20,*) Mwmax
       if (Mwmax .gt. sqrts) Mwmax=sqrts ! physical cap on m34max
       wsqmax=Mwmax**2
       if (verbose) call writeinput(6,' * ',' ','m34max')
       read(20,*) mbbmin
       bbsqmin=mbbmin**2
       if (verbose) call writeinput(6,' * ',' ','m56min')
-      read(20,*) mbbmax 
+      read(20,*) mbbmax
       if (mbbmax .gt. sqrts) Mbbmax=sqrts ! physical cap on m56max
       bbsqmax=mbbmax**2
       if (verbose) call writeinput(6,' * ',' ','m56max')
@@ -282,9 +288,9 @@ c--- jets and cuts options
       if (verbose) call writeinput(6,' * ',' ','algorithm')
       read(20,*) ptjetmin
       if (verbose) call writeinput(6,' * ',' ','ptjetmin')
-      read(20,*) etajetmin 
+      read(20,*) etajetmin
       if (verbose) call writeinput(6,' * ',' ','etajetmin')
-      read(20,*) etajetmax 
+      read(20,*) etajetmax
       if (verbose) call writeinput(6,' * ',' ','etajetmax')
       read(20,*) Rcut
       if (verbose) call writeinput(6,' * ',' ','Rcut')
@@ -312,9 +318,9 @@ c--- jets and cuts options
       if (verbose) call writeinput(6,' * ',' ','Rllmin')
       read(20,*) delyjjmin
       if (verbose) call writeinput(6,' * ',' ','delyjjmin')
-      read(20,*) jetsopphem 
+      read(20,*) jetsopphem
       if (verbose) call writeinput(6,' * ',' ','jetsopphem')
-      read(20,*) lbjscheme 
+      read(20,*) lbjscheme
       if (verbose) call writeinput(6,' * ',' ','lbjscheme')
       read(20,*) ptbjetmin
       if (verbose) call writeinput(6,' * ',' ','ptbjetmin')
@@ -326,7 +332,7 @@ c--- jets and cuts options
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- settings for photon processes 
+c--- settings for photon processes
       read(20,*) frag
       if (verbose) call writeinput(6,' * ',' ','frag')
       read(20,*) fragset
@@ -341,9 +347,9 @@ c--- settings for photon processes
       if (verbose) call writeinput(6,' * ',' ','gammpt2')
       read(20,*) gammpt3
       if (verbose) call writeinput(6,' * ',' ','gammpt3')
-      read(20,*) Rgalmin 
+      read(20,*) Rgalmin
       if (verbose) call writeinput(6,' * ',' ','Rgalmin')
-      read(20,*) Rgagamin 
+      read(20,*) Rgagamin
       if (verbose) call writeinput(6,' * ',' ','Rgagamin')
       read(20,*) Rgajetmin
       if (verbose) call writeinput(6,' * ',' ','Rgajetmin')
@@ -357,7 +363,7 @@ c--- settings for photon processes
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- anomalous couplings 
+c--- anomalous couplings
       read(20,*) delg1_z
       if (verbose) call writeinput(6,' * ',' ','delg1_z')
       read(20,*) delk_z
@@ -391,22 +397,22 @@ c--- anomalous couplings
          if (verbose) call writeinput(6,' * ',' ','cttH')
          if (verbose) call writeinput(6,' * ',' ','cWWH')
       endif
-      
+
       if (verbose) write(6,*)
       read(20,99) line
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- width of the Higgs 
+c--- width of the Higgs
       read(20,*) hwidth_ratio
       if (verbose) call writeinput(6,' * ',' ','hwidth_ratio')
-      
+
       if (verbose) write(6,*)
       read(20,99) line
 c--- write-out comment line
       read(20,99) line
       if (verbose) write(6,*) '* ',line
-c--- grid information 
+c--- grid information
       read(20,*) readin
       if (verbose) call writeinput(6,' * ',' ','readin')
       read(20,*) writeout
@@ -429,7 +435,7 @@ c      write(6,*) line
       technicalincluded=.true.
 
    88 continue
-      
+
 c--- if the contents of technical.DAT are not included, close the input
 c--- file and open technical.DAT instead; otherwise continue on
       if (technicalincluded .eqv. .false.) then
@@ -492,6 +498,18 @@ c---- read-in the technical parameters
       if (verbose) call writeinput(6,' * ',' ','bfi')
       read(20,*) bff
       if (verbose) call writeinput(6,' * ',' ','bff')
+c --- BEGIN MODIFICATION for MODS-2
+      if (verbose) write(6,*)
+      read(20,99) line
+c--- write-out comment line
+      read(20,99) line
+      if (verbose) write(6,*) '* ',line
+c--- ct-cg for Effective Higgs Operators
+      read(20,*) ct
+      if (verbose) call writeinput(6,' * ',' ','ct')
+      read(20,*) cg
+      if (verbose) call writeinput(6,' * ',' ','cg')
+c --- END MODIFICATION for MODS-2
       if (verbose) write(6,*)
       close(unit=20)
 
@@ -511,21 +529,21 @@ c      elseif (index(runstring,'mc1.5') .gt. 0) then
 c        mc=1.5d0
 c      mcsq=mc**2
 c      endif
-      
+
 c      if (runstring(1:3) .eq. 'mlm') then
 c        write(6,*) 'WARNING: cross sections divided by Ecm**2'
 c      write(6,*)
 c      endif
-      
+
 c---  create logical variable dynamicscale for use in other routines
       if (  (dynstring .eq. 'no') .or. (dynstring .eq. '.false.')
-     & .or. (dynstring .eq. 'none') ) then 
-         dynamicscale=.false. 
+     & .or. (dynstring .eq. 'none') ) then
+         dynamicscale=.false.
       else
-         dynamicscale=.true. 
+         dynamicscale=.true.
       endif
 
-c--- print warning messages if some parton fluxes are not included      
+c--- print warning messages if some parton fluxes are not included
       if (noglue) then
         write(6,*) 'WARNING: no gluon contribution included in PDF'
       write(6,*)
@@ -542,7 +560,7 @@ c--- print warning messages if some parton fluxes are not included
         write(6,*) 'WARNING: no gluon-gluon contribution included'
       write(6,*)
       endif
-      
+
 c--- assign squared masses for b- and c-quarks
       if (abs(mb) .gt. 1d-8) then
         mbsq=mb**2
@@ -554,7 +572,7 @@ c--- assign squared masses for b- and c-quarks
       else
         mcsq=1.5d0**2
       endif
-      
+
 c--- set-up the variables for the process we wish to consider
       call chooser
 
@@ -587,12 +605,12 @@ c--- this is an allowed combination
      &      .or. (case .eq. 'Z_2gam') .or. (case .eq. 'Zgajet')
      &      .or. (case .eq. 'W_2gam')) ) then
 c--- this is an allowed combination
-        else 
+        else
           write(6,*) 'part=',part,' is not a valid option'
           write(6,*) 'for this process number.'
-          stop     
+          stop
         endif
-      endif      
+      endif
 
 
 c--- check that we are not trying to calculate radiation in decay at LO
@@ -604,7 +622,7 @@ c--- check that we are not trying to calculate radiation in decay at LO
      &   .or. (case .eq. 'dk_4ft') .or. (case .eq. 'ttwldk')) ) then
           write(6,*) 'This process number cannot be used for'
           write(6,*) 'a LO calculation.'
-          stop     
+          stop
       endif
 c--- set up the default choices of static scale, if required
       if (scale .lt. 0d0) then
@@ -622,7 +640,7 @@ c--- set up the default choices of static scale, if required
         factor=4d0
         else
         factor=1d0
-      endif        
+      endif
         if ((n2+n3 .ne. 0) .or. (case .eq. 'tt_tot')) then
 c--- special case for t-tbar production
         if (case .eq. 'tt_tot') then
@@ -631,7 +649,7 @@ c--- special cases where Higgs mass is neither mass2 nor mass3
         elseif ((case(1:1) .eq. 'H') .or. (case .eq. 'WHbbar')
      &     .or. (case .eq. 'ZHbbar') .or. (case .eq. 'qq_Hqq')) then
           scale=factor*hmass
-        else     
+        else
           scale=factor*(dfloat(n2)*mass2+dfloat(n3)*mass3)/dfloat(n2+n3)
         endif
         as=alphas(scale,amz,nlooprun)
@@ -644,7 +662,7 @@ c--- special cases where Higgs mass is neither mass2 nor mass3
         write(6,*)'*                                                  *'
         write(6,49)'alpha_s (scale)',gsq/fourpi
         write(6,49)'alpha_s (zmass)',amz
-        write(6,50)' (using ',nlooprun,'-loop running of alpha_s)'  
+        write(6,50)' (using ',nlooprun,'-loop running of alpha_s)'
         write(6,*)'****************************************************'
         write(6,*)
         write(6,*)'****************************************************'
@@ -670,7 +688,7 @@ c--- special cases where Higgs mass is neither mass2 nor mass3
         factor=4d0
         else
         factor=1d0
-      endif        
+      endif
         if ((n2+n3 .ne. 0) .or. (case .eq. 'tt_tot')) then
 c--- special case for t-tbar production
         if (case .eq. 'tt_tot') then
@@ -679,7 +697,7 @@ c--- special cases where Higgs mass is neither mass2 nor mass3
         elseif ((case(1:1) .eq. 'H') .or. (case .eq. 'WHbbar')
      &     .or. (case .eq. 'ZHbbar') .or. (case .eq. 'qq_Hqq')) then
           facscale=factor*hmass
-        else     
+        else
           facscale=factor*
      &             (dfloat(n2)*mass2+dfloat(n3)*mass3)/dfloat(n2+n3)
         endif
@@ -692,7 +710,7 @@ c--- special cases where Higgs mass is neither mass2 nor mass3
         stop
         endif
       endif
-      
+
       return
 
    49 format(' *  ',a20,f12.8,16x,'*')
@@ -709,4 +727,3 @@ c--- special cases where Higgs mass is neither mass2 nor mass3
       stop
 
       end
-      

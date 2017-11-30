@@ -16,49 +16,54 @@ c---
       include 'sprods_com.f'
       include 'zprods_decl.f'
       include 'scale.f'
-      include 'anom_higgs.f' 
+      include 'anom_higgs.f'
       integer h1,h34,h56
       double precision p(mxpart,4),mb2,mt2
       double complex Mloop_bquark(2,2,2,2),Mloop_tquark(2,2,2,2),
      & ggHmt(2,2),ggHmb(2,2),qlI3,C0mt,C0mb,prop12,prop34,prop56,
      & H4l(2,2),sinthw,higgsprop
-      double precision rescale 
+      double precision rescale
+c --- BEGIN MODIFICATION for MODS-2
+      double precision ct,cg
 
-!==== for width studies rescale by appropriate factor 
-      if((keep_smhiggs_norm).and.(anom_higgs)) then 
-         rescale=chi_higgs**2 
+      common/ct/ct
+      common/cg/cg
+c --- END MODIFICATION for MODS-2
+
+!==== for width studies rescale by appropriate factor
+      if((keep_smhiggs_norm).and.(anom_higgs)) then
+         rescale=chi_higgs**2
       else
          rescale=1d0
       endif
 
       Mloop_bquark(:,:,:,:)=czip
       Mloop_tquark(:,:,:,:)=czip
-     
+
       call spinoru(6,p,za,zb)
 
 c--- squared masses and sin(thetaw)
-c--- This is the most important modification.
-c--- The top mass in the loop can be changed here
-c--- We used values of 500, 1000, 2000, 5000 GeV
-      mt2=2000.0**2
-c      mt2=mt**2
-c--- End Modification
+      mt2=mt**2
       mb2=mb**2
       sinthw=dsqrt(xw)
-      
-      
+
+
 c--- propagator factors
       prop12=higgsprop(s(1,2))
       prop34=cone/dcmplx(s(3,4)-zmass**2,zmass*zwidth)
       prop56=cone/dcmplx(s(5,6)-zmass**2,zmass*zwidth)
 
-c--- Amplitudes for production 
+c--- Amplitudes for production
       C0mt=qlI3(zip,zip,s(1,2),mt2,mt2,mt2,musq,0)
       C0mb=qlI3(zip,zip,s(1,2),mb2,mb2,mb2,musq,0)
-   
+
 c------ top quark in the loop
-      ggHmt(2,2)=mt2*(2d0-s(1,2)*C0mt*(1d0-4d0*mt2/s(1,2)))
-     & /(2d0*wmass*sinthw)
+c --- BEGIN MODIFICATION for MODS-2
+c ---      ggHmt(2,2)=mt2*(2d0-s(1,2)*C0mt*(1d0-4d0*mt2/s(1,2)))
+c ---     & /(2d0*wmass*sinthw)
+      ggHmt(2,2)=(ct * mt2*(2d0-s(1,2)*C0mt*(1d0-4d0*mt2/s(1,2)))
+     & + cg * s(1,2)/3.)/(2d0*wmass*sinthw)
+c --- END MODIFICATION for MODS-2
       ggHmt(1,1)=ggHmt(2,2)*za(1,2)/zb(1,2)
       ggHmt(2,2)=ggHmt(2,2)*zb(1,2)/za(1,2)
 
@@ -78,7 +83,7 @@ c--- Amplitudes for decay
       H4l(2,2)=za(4,6)*zb(3,5)*r1*r2
      &        *wmass/(sinthw*(1d0-xw))*prop34*prop56
 
-c--- Assemble: insert factor of (im) here      
+c--- Assemble: insert factor of (im) here
       do h1=1,2
       do h34=1,2
       do h56=1,2
@@ -98,7 +103,6 @@ c--- Rescale for width study
       enddo
       enddo
       enddo
-      
+
       return
       end
-      
